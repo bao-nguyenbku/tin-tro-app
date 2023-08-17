@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Avatar, Center, Pressable, ScrollView, Text, useToast, VStack } from 'native-base';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { RefreshControl } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { authMe } from '@/store/reducer/user';
@@ -49,7 +50,7 @@ const AccountMenu = (props) => {
       try {
         await sendFileRequest.post('/users/upload-avatar', formData);
         toast.show({
-          render: () => <CustomToast title="Cập nhật ảnh đại diện thành công." status="success" />,
+          render: () => <CustomToast title='Cập nhật ảnh đại diện thành công.' status='success' />,
           placement: 'top',
         });
         setImage(result.assets[0].uri);
@@ -69,16 +70,19 @@ const AccountMenu = (props) => {
             <Avatar
               size={127}
               borderRadius={127}
+              bg='muted.300'
               source={{
                 uri: !image ? user.currentUser.avatar : image,
               }}
               alt={user.currentUser.name}
-            />
+            >
+              <Ionicons name='image-outline' size={40}/>
+            </Avatar>
           </Pressable>
-          <Text pt={2} color="tertiary.600" bold fontSize="2xl">
+          <Text pt={2} color='tertiary.600' bold fontSize='2xl'>
             {user.currentUser.name}
           </Text>
-          <Text color="muted.500">{user.currentUser.role ? mapRoleToText(user.currentUser.role) : 'Khách'}</Text>
+          <Text color='muted.500'>{user.currentUser.role ? mapRoleToText(user.currentUser.role) : 'Khách'}</Text>
         </Center>
 
         {user.currentUser.role === 'USER' && <UserMenu loading={loading} setLoading={setLoading} dispatch={dispatch} {...props} />}

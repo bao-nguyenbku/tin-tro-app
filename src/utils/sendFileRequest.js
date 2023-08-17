@@ -3,7 +3,7 @@ import axios from 'axios';
 import { getToken } from './token';
 
 const request = axios.create({
-  baseURL: process.env.API_BASE_URL || 'https://obedient-veil-production.up.railway.app',
+  baseURL: process.env.EXPO_PUBLIC_API_BASE_URL,
   headers: {
     'Content-Type': 'multipart/form-data',
   },

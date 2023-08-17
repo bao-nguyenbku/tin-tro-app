@@ -1,7 +1,7 @@
 import { Box, Image, Text } from 'native-base';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import React from 'react';
-import { formatCurrency } from '@/utils/utils';
+import { formatCurrency } from '@/utils';
 
 const SingleItem = (props) => {
   const { data } = props;

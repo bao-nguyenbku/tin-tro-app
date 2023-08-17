@@ -5,7 +5,7 @@ import { Box, Text, Image, ScrollView } from 'native-base';
 import { getRentRequestByRenter, selectAccommodationState } from '@/store/reducer/accommodation';
 import { getRoomInfo, selectRentingState } from '@/store/reducer/renting';
 import Loading from '@/components/loading';
-import { disableBottomTabBar } from '@/utils/utils';
+import { disableBottomTabBar } from '@/utils';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import CommonInfo from './CommonInfo';

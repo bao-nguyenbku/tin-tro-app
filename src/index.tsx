@@ -8,7 +8,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { enableScreens } from 'react-native-screens';
 import App from '@/App';
 import store from '@/store';
-// import store from '';
 
 SplashScreen.preventAutoHideAsync();
 

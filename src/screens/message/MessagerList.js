@@ -4,7 +4,7 @@ import { fetchMessageSections } from '@/store/reducer/message';
 import Loading from '@/components/loading';
 import Error from '@/components/error';
 import { Avatar, Flex, Heading, HStack, Pressable, ScrollView, Text, VStack } from 'native-base';
-import { formatDate } from '@/utils/formatDate';
+import { formatDate } from '@/utils';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { RefreshControl } from 'react-native';
 

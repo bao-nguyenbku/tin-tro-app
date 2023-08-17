@@ -1,10 +1,10 @@
 import React from 'react';
 import { Box, Text } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
-import { formatDate } from '@/utils/formatDate';
+import { formatDate } from '@/utils';
 import { useDispatch } from 'react-redux';
 import { deleteParking } from '@/store/reducer/parking';
-import { formatCurrency } from '@/utils/utils';
+import { formatCurrency } from '@/utils';
 import DeleteRegister from './DeleteRegister';
 
 const ParkingBill = (props) => {
@@ -25,7 +25,7 @@ const ParkingBill = (props) => {
         <Text>Ngày bắt đầu</Text>
         <Box bgColor='blueGray.100' rounded='xl' p='4'>
           <Text fontSize='md' fontWeight='700'>
-            {formatDate(data.startDate, 'DD - MM - YYYY hh:mmA')}
+            {formatDate(data.startDate)}
           </Text>
         </Box>
       </Box>

@@ -1,18 +1,19 @@
 import React, { useLayoutEffect, useState, useEffect } from 'react';
 import { Box, Text, Input, VStack, ScrollView, useToast } from 'native-base';
-import { formatDate } from '@/utils/formatDate';
+import dayjs from 'dayjs';
+import { formatDate } from '@/utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { KeyboardAvoidingView, Platform } from 'react-native';
 import { registerWifi, selectWifiState, reset } from '@/store/reducer/wifi';
-import { disableBottomTabBar } from '@/utils/utils';
+import { disableBottomTabBar } from '@/utils';
 import { useTopHeight } from '@/hooks/useHeaderHeight';
 import { useNavigation } from '@react-navigation/native';
 import RegisterButton from './RegisterButton';
 import ChoosePackage from './ChoosePackage';
 
 const RegisterWifi = () => {
-  const startDate = new Date();
-  const endDate = (new Date()).setDate(startDate.getDate() + 31);
+  const startDate = dayjs();
+  const endDate = dayjs().set('date', startDate.get('date') + 31);
   const { wifi } = useSelector(selectWifiState);
   const toast = useToast();
   const topHeight = useTopHeight();
@@ -79,7 +80,7 @@ const RegisterWifi = () => {
               rounded='xl'
               p='4'
             >
-              <Text fontSize='md' fontWeight='700'>{(formatDate(startDate, 'DD - MM - YYYY hh:mmA'))}</Text>
+              <Text fontSize='md' fontWeight='700'>{(formatDate(startDate))}</Text>
             </Box>
           </Box>
           <Box>
@@ -89,7 +90,7 @@ const RegisterWifi = () => {
               rounded='xl'
               p='4'
             >
-              <Text fontSize='md' fontWeight='700'>{(formatDate(endDate, 'DD - MM - YYYY hh:mmA'))}</Text>
+              <Text fontSize='md' fontWeight='700'>{(formatDate(endDate))}</Text>
             </Box>
           </Box>
           <Box>
