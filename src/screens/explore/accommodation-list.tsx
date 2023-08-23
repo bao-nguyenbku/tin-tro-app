@@ -1,11 +1,10 @@
-import React, { memo, useCallback, useEffect, useLayoutEffect } from 'react';
-import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import React, { memo, useEffect } from 'react';
 import { useAppDispatch } from '@/hooks';
 import { Box, Text } from 'native-base';
-import { RefreshControl, TouchableOpacity, ScrollView, FlatList, TouchableHighlight, Pressable } from 'react-native';
-import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
+import { RefreshControl, FlatList, Pressable } from 'react-native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { getAllAccommodations, selectAccommodationState, getRecommendAccommodations } from '@/store/reducer/accommodation';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import SingleItem from './single-accommodation';
 import SearchIcon from './SearchIcon';
 import RecommendAccommodation from './recommend-accommodation';
@@ -70,8 +69,4 @@ const AccommodationListScreen = (props: any) => {
   );
 };
 
-function arePropsEqual(prevProps: any, currProps: any) {
-  // return prevProps.navigation.getState().key === currProps.navigation.getState().key;
-  return true;
-}
-export default memo(AccommodationListScreen, arePropsEqual);
+export default memo(AccommodationListScreen);

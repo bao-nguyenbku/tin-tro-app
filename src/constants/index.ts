@@ -17,13 +17,6 @@ export const CONFIRM_MODAL = {
   DELETE: 'danger.600',
 };
 
-export enum USER_ROLE {
-  RENTER = 'USER',
-  OWNER = 'ADMIN',
-}
-
-
-
 export const primaryLinear = {
   linearGradient: {
     colors: [COLORS.PRIMARY_2, COLORS.PRIMARY],

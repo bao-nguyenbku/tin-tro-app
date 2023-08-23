@@ -1,18 +1,12 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
-import ExploreScreen from '@/screens/explore';
-import MyRoomScreen from '@/screens/my-room';
-import MessageScreen from '@/screens/message';
-import { Text } from 'native-base';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { ROUTES } from '@/navigation/routes.config';
 import { Ionicons } from '@expo/vector-icons';
-import AccountNav from '@/navigation/account';
 import AccommodationList from '@/screens/explore/accommodation-list';
 import RoomMenu from '@/screens/my-room/RoomMenu';
-import MessagerList from '@/screens/message/MessagerList';
+import MessageList from '@/screens/message/message-list';
 import AccountMenu from '@/screens/account';
-import SearchIcon from '@/screens/explore/SearchIcon';
-import CustomHeader from '../home-header';
+import HomeHeader from '@/components/home-header';
 import { COLORS } from '@/constants';
 
 const Tab = createBottomTabNavigator();
@@ -65,7 +59,7 @@ export default function UserBottomBar(props: any) {
         name='Explore'
         options={{
           title: 'Tìm phòng trọ',
-          header: (props) => <CustomHeader {...props} />,
+          // header: (props) => <HomeHeader {...props} />,
         }}
         children={() => <AccommodationList {...props} />}
       />
@@ -81,7 +75,7 @@ export default function UserBottomBar(props: any) {
         options={{
           title: 'Tin nhắn',
         }}
-        children={() => <MessagerList {...props} />}
+        children={() => <MessageList {...props} />}
       />
       <Tab.Screen
         name='Account'

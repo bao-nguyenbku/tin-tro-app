@@ -4,15 +4,15 @@ import React from 'react';
 import { ADMIN_ROUTES } from '@/navigation/routes.config';
 import { Ionicons } from '@expo/vector-icons';
 
-import MessageNav from '@/navigation/message';
-import AccountNav from '@/navigation/account';
-import AdminExploreNav from '@/navigation/adminExplore';
-import AdminRentRequest from '@/navigation/adminRentRequest';
+import MessageList from '@/screens/message/message-list';
 import { COLORS } from '@/constants';
+import AdminMyAccommodation from '@/screens/admin-my-accommodation';
+import RequestList from '@/screens/admin-rent-request/request-list';
+import AccountMenu from '@/screens/account';
 
 const Tab = createBottomTabNavigator();
 
-const RenderIcon = ({ route, focused, color, size }) => {
+function renderIcon({ route, focused, color, size }) {
   let iconName;
   if (route.name === ADMIN_ROUTES.myAccomm.title) {
     iconName = focused ? 'home' : 'home-outline';
@@ -26,19 +26,19 @@ const RenderIcon = ({ route, focused, color, size }) => {
 
   // You can return any component that you like here!
   return <Ionicons name={iconName} size={size} color={color} />;
-};
+}
 
-const AdminBottomBar = () => {
+export default function AdminBottomBar() {
   return (
     <Tab.Navigator
       initialRouteName={ADMIN_ROUTES.myAccomm.title}
       sceneContainerStyle={{
-        backgroundColor: '#F3F4F6',
+        backgroundColor: COLORS.CONTAINER,
       }}
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => RenderIcon({ focused, color, size, route }),
+        tabBarIcon: ({ focused, color, size }) => renderIcon({ focused, color, size, route }),
         tabBarActiveTintColor: COLORS.PRIMARY,
-        tabBarInactiveTintColor: '#71717A',
+        tabBarInactiveTintColor: COLORS.IN_ACTIVE,
         tabBarStyle: {
           position: 'absolute',
           overflow: 'hidden',
@@ -52,41 +52,34 @@ const AdminBottomBar = () => {
         headerShown: false,
       })}
     >
-      {Object.keys(ADMIN_ROUTES).map((tabScreen) => {
-        let TabScreen;
-        switch (ADMIN_ROUTES[tabScreen].title) {
-          case ADMIN_ROUTES.myAccomm.title: {
-            TabScreen = AdminExploreNav;
-            break;
-          }
-          case ADMIN_ROUTES.request.title: {
-            TabScreen = AdminRentRequest;
-            break;
-          }
-          case ADMIN_ROUTES.message.title: {
-            TabScreen = MessageNav;
-            break;
-          }
-          case ADMIN_ROUTES.account.title: {
-            TabScreen = AccountNav;
-            break;
-          }
-          default:
-            break;
-        }
-        return (
-          <Tab.Screen
-            name={ADMIN_ROUTES[tabScreen].title}
-            key={tabScreen.toString()}
-            children={() => <TabScreen {...ADMIN_ROUTES[tabScreen]} />}
-            options={{
-              title: ADMIN_ROUTES[tabScreen].label,
-            }}
-          />
-        );
-      })}
+      <Tab.Screen
+        name='MyAccomm'
+        children={(props) => <AdminMyAccommodation {...props} />}
+        options={{
+          title: 'Nhà trọ của tôi',
+        }}
+      />
+      <Tab.Screen
+        name='Request'
+        children={(props) => <RequestList {...props} />}
+        options={{
+          title: 'Yêu cầu',
+        }}
+      />
+      <Tab.Screen
+        name='Message'
+        children={(props) => <MessageList {...props} />}
+        options={{
+          title: 'Tin nhắn',
+        }}
+      />
+      <Tab.Screen
+        name='Account'
+        children={(props) => <AccountMenu {...props} />}
+        options={{
+          title: 'Tài khoản',
+        }}
+      />
     </Tab.Navigator>
   );
-};
-
-export default AdminBottomBar;
+}

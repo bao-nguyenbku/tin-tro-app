@@ -13,7 +13,8 @@ This mobile application is an rooming house management.
 - Register for wi-fi and parking slot
 - Request checkout the room to owner
 
-#### Note: source code for the app is moved to other repo
+## 🛑 Notice 🛑
+This application is not publish to the store and currently in maintenance
 
 ## Demonstration
 
@@ -28,6 +29,10 @@ Videos: Coming soon...
 ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
 ![Socket.io](https://img.shields.io/badge/Socket.io-black?style=for-the-badge&logo=socket.io&badgeColor=010101)
 ![Yarn](https://img.shields.io/badge/yarn-%232C8EBB.svg?style=for-the-badge&logo=yarn&logoColor=white)
+
+## Design
+![Figma](https://www.figma.com/file/Jo1W9jbAOCZX3OcnPdxYj8/Design?type=design&node-id=0%3A1&mode=design&t=F4k07s6lBDrRUTeF-1)
+
 ## User Interfaces
 <img src='screenshots/IMG-0079.PNG' width='49%'/>  <img src='screenshots/IMG-0081.PNG' width='49%'/>
 <img src='screenshots/IMG-0082.PNG' width='49%'/>  <img src='screenshots/IMG-0083.PNG' width='49%'/>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import * as FormData from 'form-data';
 import { Avatar, Center, Pressable, ScrollView, Text, useToast, VStack } from 'native-base';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { RefreshControl } from 'react-native';
@@ -10,7 +11,7 @@ import Loading from '@/components/loading';
 import UserMenu from './UserMenu';
 import AdminMenu from './AdminMenu';
 import { useAppDispatch, useAppSelector } from '@/hooks';
-import { USER_ROLE } from '@/constants';
+import { USER_ROLE } from '@/types/data-types';
 
 const mapRoleToText = (role) => {
   switch (role) {
@@ -23,9 +24,9 @@ const mapRoleToText = (role) => {
   }
 };
 
-const AccountMenu = (props) => {
+export default function AccountMenu (props) {
   const user = useAppSelector((state) => state.user);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [image, setImage] = useState(null);
   const toast = useToast();
   const dispatch = useAppDispatch();
@@ -56,7 +57,7 @@ const AccountMenu = (props) => {
         });
         setImage(result.assets[0].uri);
       } catch (err) {
-        console.log(err);
+        return false;
       }
     }
   };
@@ -93,4 +94,3 @@ const AccountMenu = (props) => {
   );
 };
 
-export default AccountMenu;

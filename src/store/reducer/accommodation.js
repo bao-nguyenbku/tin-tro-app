@@ -47,7 +47,7 @@ const initialState = {
   adminRentRequests: [],
 };
 
-export const accommodationSlice = createSlice({
+const accommodationSlice = createSlice({
   name: 'accommodation',
   initialState,
   reducers: {
@@ -141,7 +141,7 @@ export const accommodationSlice = createSlice({
       .addCase(cancelRentRequest.pending, (state) => {
         state.cancelRequest.loading = true;
       })
-      .addCase(cancelRentRequest.fulfilled, (state, _action) => {
+      .addCase(cancelRentRequest.fulfilled, (state) => {
         state.cancelRequest.loading = false;
       })
       // --------------------- ADMIN FETCH MY ÂCCOMMODATION ---------------------
@@ -432,4 +432,5 @@ export const deleteRentRequestById = createAsyncThunk('accommodation/deleteRentR
 
 export const selectAccommodationState = createSelector([(state) => state.accommodation], (accommodationState) => accommodationState);
 export const { resetError, filterByPrice, resetRentRequest } = accommodationSlice.actions;
-export default accommodationSlice.reducer;
+
+export default accommodationSlice;

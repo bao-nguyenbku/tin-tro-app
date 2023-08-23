@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { fetchMessageSections } from '@/store/reducer/message';
 import Loading from '@/components/loading';
 import Error from '@/components/error';
@@ -7,32 +6,33 @@ import { Avatar, Flex, Heading, HStack, Pressable, ScrollView, Text, VStack } fr
 import { formatDate } from '@/utils';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { RefreshControl } from 'react-native';
+import { useAppDispatch, useAppSelector } from '@/hooks';
 
-const MessagerList = () => {
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-  const { messageSections, loading, error } = useSelector((state) => state.message);
+export default function MessageList() {
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user);
+  const { messageSections, loading, error } = useAppSelector((state) => state.message);
   const navigation = useNavigation();
   const isFocus = useIsFocused();
 
   useEffect(() => {
-    if (isFocus) dispatch(fetchMessageSections({ done: () => {} }));
-  }, [isFocus, dispatch]);
+    if (isFocus) dispatch(fetchMessageSections());
+  }, [isFocus]);
 
   if (loading) return <Loading />;
   if (error) return <Error message={error} />;
 
   return !messageSections.filter((messageSection) => messageSection.messages.length > 0).length ? (
-    <Flex alignSelf="center" justifyContent="center" alignItems="center" h="full">
-      <Text color="coolGray.500">Bạn không có tin nhắn nào</Text>
+    <Flex alignSelf='center' justifyContent='center' alignItems='center' h='full'>
+      <Text color='coolGray.500'>Bạn không có tin nhắn nào</Text>
     </Flex>
   ) : (
     <ScrollView
       refreshControl={<RefreshControl refreshing={loading} onRefresh={() => dispatch(fetchMessageSections())} />}
-      h="100%"
-      backgroundColor="coolGray.100"
+      h='100%'
+      backgroundColor='coolGray.100'
     >
-      <VStack py="4" h="100%" space={1}>
+      <VStack py='4' h='100%' space={1}>
         {messageSections.map((section) => {
           const messages = section.messages;
           const from = messages.length && messages[0].from;
@@ -49,27 +49,27 @@ const MessagerList = () => {
                   name: user.currentUser.id === fromId ? otherUser.name : from.name,
                 })
               }
-              my="2"
-              h="100px"
+              my='2'
+              h='100px'
               key={section.id}
-              w="full"
+              w='full'
             >
               {({ isPressed }) => (
-                <HStack borderRadius={12} h="full" alignItems="center" mx="6" space={2} backgroundColor={isPressed ? 'muted.200' : '#fff'} px="4">
-                  <Flex mr={2} pr={2} w="1/6">
-                    <Avatar size="md" borderRadius="full" source={{ uri: otherUser.avatar }} />
+                <HStack borderRadius={12} h='full' alignItems='center' mx='6' space={2} backgroundColor={isPressed ? 'muted.200' : '#fff'} px='4'>
+                  <Flex mr={2} pr={2} w='1/6'>
+                    <Avatar size='md' borderRadius='full' source={{ uri: otherUser.avatar }} />
                   </Flex>
-                  <VStack w="1/2" space={1.5}>
-                    <Heading fontSize="md" color="#000">
+                  <VStack w='1/2' space={1.5}>
+                    <Heading fontSize='md' color='#000'>
                       {otherUser.name}
                     </Heading>
 
-                    <Text isTruncated maxW="300" noOfLines={1} fontSize="xs" color="muted.500">
+                    <Text isTruncated maxW='300' noOfLines={1} fontSize='xs' color='muted.500'>
                       {fromId === user?.currentUser?.id && 'Bạn: '} {messages[0].text}
                     </Text>
                   </VStack>
-                  <Flex wrap="wrap" left={4} w="auto" mt="12" h="full">
-                    <Text color="muted.500" fontSize="xs">
+                  <Flex wrap='wrap' left={4} w='auto' mt='12' h='full'>
+                    <Text color='muted.500' fontSize='xs'>
                       {formatDate(messages[0].createdAt, 'MM/DD HH:mm')}
                     </Text>
                   </Flex>
@@ -81,6 +81,4 @@ const MessagerList = () => {
       </VStack>
     </ScrollView>
   );
-};
-
-export default MessagerList;
+}

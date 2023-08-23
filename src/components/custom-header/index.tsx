@@ -4,7 +4,7 @@ import { getHeaderTitle } from '@react-navigation/elements';
 import BackButton from '@/components/back-button';
 import { COLORS } from '@/constants';
 
-export default function HomeHeader(props: any) {
+export default function CustomHeader(props: any) {
   const { navigation, route, options, back } = props;
   const { headerRight } = options;
   const title = getHeaderTitle(options, route.name);

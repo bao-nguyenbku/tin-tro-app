@@ -139,7 +139,7 @@ const UserRequestCard = ({ id, name, phone, createdAt, avatar, navigation, detai
   );
 };
 
-const RequestList = () => {
+export default function RequestList() {
   const accommodation = useSelector((state) => state.accommodation);
 
   const dispatch = useDispatch();
@@ -177,6 +177,4 @@ const RequestList = () => {
       )}
     </ScrollView>
   );
-};
-
-export default RequestList;
+}

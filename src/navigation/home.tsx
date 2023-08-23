@@ -1,11 +1,10 @@
 import React from 'react';
 import { useAppSelector } from '@/hooks';
-import { Box } from 'native-base';
 import { selectUserState } from '@/store/reducer/user';
 import UserBottomBar from '@/components/user-bottom-bar';
 import AdminBottomBar from '@/components/admin-bottom-bar';
 import Loading from '@/components/loading';
-import { USER_ROLE } from '@/constants';
+import { USER_ROLE } from '@/types/data-types';
 
 export default function Home() {
   const { currentUser, loading } = useAppSelector(selectUserState);
