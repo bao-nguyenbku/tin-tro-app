@@ -1,7 +1,7 @@
 import React from 'react';
 import { VStack, Box, Image, Text } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
-import { formatCurrency } from '@/utils/utils';
+import { formatCurrency } from '@/utils';
 
 const RecommendSingleItem = (props) => {
   const { data } = props;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Box, HStack, Text, Pressable } from 'native-base';
-import { formatCurrency } from '@/utils/utils';
+import { formatCurrency } from '@/utils';
 
 
 const wifiPackage = [

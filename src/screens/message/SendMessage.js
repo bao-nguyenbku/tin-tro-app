@@ -7,11 +7,11 @@ import { pushMessage, sendMessage, setMessages } from '@/store/reducer/message';
 import { getToken } from '@/utils/token';
 
 import { io } from 'socket.io-client';
-import { disableBottomTabBar } from '@/utils/utils';
+import { disableBottomTabBar } from '@/utils';
 import { Platform, RefreshControl } from 'react-native';
 import { useTopHeight } from '@/hooks/useHeaderHeight';
 
-const socketUrl = `https://obedient-veil-production.up.railway.app/message`;
+const socketUrl = process.env.EXPO_PUBLIC_API_BASE_URL + '/message';
 
 const SendMessage = ({ route }) => {
   const { fromId } = route.params;

@@ -43,7 +43,7 @@ const UserBottomBar = () => {
           right: 0,
           justifyContent: 'center',
         },
-        // TODO: Temporary disable bottom tab nav header
+        // TODO: Temporarily disable bottom tab nav header
         // header: (props) => <Header {...props} />
         headerShown: false,
       })}

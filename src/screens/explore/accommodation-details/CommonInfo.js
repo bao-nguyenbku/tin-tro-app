@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Text } from 'native-base';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { formatCurrency } from '@/utils/utils';
+import { formatCurrency } from '@/utils';
 
 const CommonInfo = (props) => {
   const { item } = props;

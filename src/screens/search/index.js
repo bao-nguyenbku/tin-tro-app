@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Text, ScrollView, Select, CheckIcon } from 'native-base';
 import { TouchableWithoutFeedback, Keyboard, TextInput, TouchableOpacity } from 'react-native';
-import { disableBottomTabBar } from '@/utils/utils';
+import { disableBottomTabBar } from '@/utils';
 import { selectAccommodationState, searchAccommodationByKeyword, filterByPrice } from '@/store/reducer/accommodation';
 import { useDispatch, useSelector } from 'react-redux';
 import SingleItem from '@/screens/explore/SingleItem';
