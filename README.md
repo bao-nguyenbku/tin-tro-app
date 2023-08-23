@@ -14,7 +14,7 @@ This mobile application is an rooming house management.
 - Request checkout the room to owner
 
 ## 🛑 Notice 🛑
-This application is not publish to the store and currently in maintenance
+This application is `not publish` to the store and currently in `maintenance`
 
 ## Demonstration
 
