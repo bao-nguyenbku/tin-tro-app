@@ -1,10 +1,12 @@
 import { AntDesign, Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import { Box, Flex, HStack, Pressable, Text, VStack } from 'native-base';
 import React from 'react';
 import { setCurrentUser } from '@/store/reducer/user';
 import { deleteToken } from '@/utils/token';
 
-const UserMenu = ({ setLoading, loading, dispatch, navigation }) => {
+export default function UserMenu ({ setLoading, loading, dispatch }) {
+  const navigation = useNavigation();
   const menu = [
     {
       id: 1,
@@ -103,4 +105,3 @@ const UserMenu = ({ setLoading, loading, dispatch, navigation }) => {
     </Box>
   );
 };
-export default UserMenu;

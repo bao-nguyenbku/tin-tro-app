@@ -2,8 +2,8 @@ import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Avatar, Box, HStack, Text } from 'native-base';
-import CustomHeader from '@/components/header';
-import MessagerList from '@/screens/message/MessagerList';
+import CustomHeader from '@/components/home-header';
+import MessageList from '@/screens/message/message-list';
 import SendMessage from '@/screens/message/SendMessage';
 
 const Stack = createNativeStackNavigator();
@@ -24,7 +24,7 @@ const TitleHeaderOfMessageScreen = ({ name, avatar, navigation }) => {
 
 const MessageNav = () => {
   return (
-    <Stack.Navigator initialRouteName="MessagerList">
+    <Stack.Navigator initialRouteName="MessageList">
       <Stack.Screen
         options={{
           header: (stackProps) => <CustomHeader {...stackProps} />,
@@ -32,8 +32,8 @@ const MessageNav = () => {
           headerTitleAlign: 'center',
           title: 'Tin nhắn',
         }}
-        name="MessagerList"
-        component={MessagerList}
+        name="MessageList"
+        component={MessageList}
       />
       <Stack.Screen
         name="SendMessage"

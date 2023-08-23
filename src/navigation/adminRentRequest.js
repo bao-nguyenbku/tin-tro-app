@@ -1,11 +1,11 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import CustomHeader from '@/components/header';
-import RequestList from '@/screens/admin-rent-request/RequestList';
+import CustomHeader from '@/components/home-header';
+import RequestList from '@/screens/admin-rent-request/request-list';
 import React from 'react';
 
 const Stack = createNativeStackNavigator();
 
-const AdminRentRequest = () => {
+export default function AdminRentRequest () {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -27,4 +27,3 @@ const AdminRentRequest = () => {
   );
 };
 
-export default AdminRentRequest;

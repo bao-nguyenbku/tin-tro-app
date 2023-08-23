@@ -5,14 +5,15 @@ import { Provider } from 'react-redux';
 import * as SplashScreen from 'expo-splash-screen';
 import { NativeBaseProvider } from 'native-base';
 import { NavigationContainer } from '@react-navigation/native';
-import { enableScreens } from 'react-native-screens';
+import { config, stackTheme, theme } from './theme';
+
 import App from '@/App';
 import store from '@/store';
 
 SplashScreen.preventAutoHideAsync();
 
+
 function Entry() {
-  enableScreens(false);
   const [isReady, setIsReady] = useState(false);
 
   setTimeout(() => {
@@ -22,8 +23,8 @@ function Entry() {
   if (isReady) {
     return (
       <Provider store={store}>
-      <NavigationContainer>
-        <NativeBaseProvider>
+      <NavigationContainer theme={stackTheme}>
+        <NativeBaseProvider config={config} theme={theme}>
           <StatusBar style='auto' />
           <App />
         </NativeBaseProvider>

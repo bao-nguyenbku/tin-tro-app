@@ -67,7 +67,7 @@ const RequestRentalButton = (props) => {
           <Box />
         ) : (
           <Button
-            bgColor="tertiary.600"
+            bgColor='primary.500'
             height="16"
             isDisabled={buttonProps.disable}
             _disabled={{

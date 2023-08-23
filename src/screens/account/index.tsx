@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
+import * as FormData from 'form-data';
 import { Avatar, Center, Pressable, ScrollView, Text, useToast, VStack } from 'native-base';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { RefreshControl } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
 import { authMe } from '@/store/reducer/user';
 import * as ImagePicker from 'expo-image-picker';
 import sendFileRequest from '@/utils/sendFileRequest';
@@ -10,6 +10,8 @@ import CustomToast from '@/components/custom-toast';
 import Loading from '@/components/loading';
 import UserMenu from './UserMenu';
 import AdminMenu from './AdminMenu';
+import { useAppDispatch, useAppSelector } from '@/hooks';
+import { USER_ROLE } from '@/types/data-types';
 
 const mapRoleToText = (role) => {
   switch (role) {
@@ -22,12 +24,12 @@ const mapRoleToText = (role) => {
   }
 };
 
-const AccountMenu = (props) => {
-  const user = useSelector((state) => state.user);
-  const [loading, setLoading] = useState(false);
+export default function AccountMenu (props) {
+  const user = useAppSelector((state) => state.user);
+  const [loading, setLoading] = useState<boolean>(false);
   const [image, setImage] = useState(null);
   const toast = useToast();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -55,7 +57,7 @@ const AccountMenu = (props) => {
         });
         setImage(result.assets[0].uri);
       } catch (err) {
-        console.log(err);
+        return false;
       }
     }
   };
@@ -85,11 +87,10 @@ const AccountMenu = (props) => {
           <Text color='muted.500'>{user.currentUser.role ? mapRoleToText(user.currentUser.role) : 'Khách'}</Text>
         </Center>
 
-        {user.currentUser.role === 'USER' && <UserMenu loading={loading} setLoading={setLoading} dispatch={dispatch} {...props} />}
-        {user.currentUser.role === 'ADMIN' && <AdminMenu loading={loading} setLoading={setLoading} dispatch={dispatch} {...props} />}
+        {user.currentUser.role === USER_ROLE.RENTER && <UserMenu loading={loading} setLoading={setLoading} dispatch={dispatch} {...props} />}
+        {user.currentUser.role === USER_ROLE.OWNER && <AdminMenu loading={loading} setLoading={setLoading} dispatch={dispatch} {...props} />}
       </VStack>
     </ScrollView>
   );
 };
 
-export default AccountMenu;

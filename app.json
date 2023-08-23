@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "tin-tro-app",
-    "slug": "tin-tro-app",
+    "name": "tin-tro",
+    "slug": "tin-tro",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./public/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./public/splash.png",
+      "image": "./public/splash-2.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -15,19 +15,37 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.baonguyen.tintro",
+      "infoPlist": {
+        "NSAllowsArbitraryLoads": {
+            "NSAllowsArbitraryLoads": true
+        }
+    }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./public/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.baonguyen.tintro",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./public/favicon.png"
     },
     "experiments": {
       "tsconfigPaths": true
-    }
+    },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "flipper": true
+          }
+        }
+      ]
+    ]
   }
 }

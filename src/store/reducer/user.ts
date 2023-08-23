@@ -2,10 +2,19 @@ import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit'
 import { jwtParse, setToken } from '@/utils/token';
 
 import request from '@/utils/axios';
+import { IUser } from '@/types/data-types';
 
+interface UserState {
+  currentUser: IUser;
+  token: any;
+  loading: boolean;
+  messagedUsers: any[];
+  error: any;
+  loggedIn: boolean;
+}
 // INITIAL STATE
-const initialState = {
-  currentUser: {},
+const initialState: UserState = {
+  currentUser: undefined,
   token: null,
   loading: false,
   messagedUsers: [],
@@ -26,7 +35,6 @@ export const register = createAsyncThunk('users/register', async ({ name, email,
     if (done) done();
     return response.data;
   } catch (err) {
-    console.error(JSON.stringify(err, null, 2));
     if (!err.response) {
       return rejectWithValue({ statusCode: 500, message: err.message });
     }
@@ -81,21 +89,21 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    resetData: (state, _) => {
+    resetData: (state) => {
       state.loading = false;
       state.error = null;
     },
-    setCurrentUser: (state, _action) => {
+    setCurrentUser: (state) => {
       state.currentUser = {};
       state.loggedIn = false;
     },
   },
   extraReducers: (builder) => {
     // --------------------------- REGISTER ---------------------------
-    builder.addCase(register.pending, (state, _) => {
+    builder.addCase(register.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(register.fulfilled, (state, _) => {
+    builder.addCase(register.fulfilled, (state) => {
       state.loading = false;
     });
     builder.addCase(register.rejected, (state, action) => {
@@ -104,7 +112,7 @@ export const userSlice = createSlice({
       state.loading = false;
     });
     // --------------------------- LOGIN ---------------------------
-    builder.addCase(logIn.pending, (state, _) => {
+    builder.addCase(logIn.pending, (state) => {
       state.loading = true;
     });
     builder.addCase(logIn.fulfilled, (state, action) => {
@@ -118,7 +126,7 @@ export const userSlice = createSlice({
       state.loading = false;
     });
     // --------------------------- SAVE USER ---------------------------
-    builder.addCase(saveUser.pending, (state, _) => {
+    builder.addCase(saveUser.pending, (state) => {
       state.loading = true;
     });
     builder.addCase(saveUser.fulfilled, (state, action) => {
@@ -130,7 +138,7 @@ export const userSlice = createSlice({
       state.loading = false;
     });
     // --------------------------- AUTH ME ---------------------------
-    builder.addCase(authMe.pending, (state, _) => {
+    builder.addCase(authMe.pending, (state) => {
       state.loading = true;
     });
     builder.addCase(authMe.fulfilled, (state, action) => {
@@ -139,7 +147,7 @@ export const userSlice = createSlice({
       state.loading = false;
       state.error = null;
     });
-    builder.addCase(authMe.rejected, (state, _) => {
+    builder.addCase(authMe.rejected, (state) => {
       state.loading = false;
       state.loggedIn = false;
     });

@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import request from '@/utils/axios';
+import { RootState } from '@/store';
 
 const initialState = {
   error: null,
@@ -20,11 +21,17 @@ export const sendMessage = createAsyncThunk('message/sendMessage', async ({ mess
 });
 
 // * ------------------------------ THUNKS ------------------------- */
-export const fetchMessageSections = createAsyncThunk('messages/fetchMessageSections', async ({ done }, { rejectWithValue, fulfillWithValue }) => {
+export const fetchMessageSections = createAsyncThunk<
+  any,
+  void,
+  {
+    state: RootState;
+  }
+>('messages/fetchMessageSections', async (_, { rejectWithValue, fulfillWithValue }) => {
   try {
     const response = await request.get('/message-sections');
     const { data } = response;
-    if (done) done();
+
     return fulfillWithValue({ messageSections: data.messageSections });
   } catch (e) {
     if (e.response) return rejectWithValue({ statusCode: e.response.data.statusCode, message: e.response.data.message });
