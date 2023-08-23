@@ -2,7 +2,7 @@
 
 This mobile application is an rooming house management. 
   
-👉Owners can promote their accommodation to people. Owner aka admin of the current accommodation can:
+👉 Owners can promote their accommodation to people. Owner aka admin of the current accommodation can:
 - Manage information of rooms
 - Request renter to checkout if they realized that, the renter violate the policy
 - Accept request rent room from customer

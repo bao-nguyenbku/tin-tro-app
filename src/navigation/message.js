@@ -2,7 +2,7 @@ import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Avatar, Box, HStack, Text } from 'native-base';
-import CustomHeader from '@/components/header';
+import CustomHeader from '@/components/home-header';
 import MessagerList from '@/screens/message/MessagerList';
 import SendMessage from '@/screens/message/SendMessage';
 

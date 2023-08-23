@@ -1,8 +1,10 @@
 import axios from 'axios';
 import { getToken } from './token';
+// import { API_BASE_URL } from '@/constants';
+
 
 const request = axios.create({
-  baseURL: 'http://192.168.1.9:5000' || process.env.API_BASE_URL || 'https://obedient-veil-production.up.railway.app',
+  baseURL: 'http://192.168.1.5:5000',
   headers: {
     Accept: '*/*',
     Connection: 'keep-alive',

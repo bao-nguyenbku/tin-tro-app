@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Box, HStack, Text, Modal, Button } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
+import { COLORS } from "@/constants";
 
 const ReviewModal = (props) => {
   const { isOpen, onClose, onConfirm, review } = props;
@@ -34,7 +35,7 @@ const ReviewModal = (props) => {
                   >
                     <Ionicons
                       name={index <= selectedIndex ? "star-sharp": "star-outline"}
-                      color={index <= selectedIndex ? "#059669": "#000"}
+                      color={index <= selectedIndex ? COLORS.PRIMARY: "#000"}
                       size={24}
                     />
                   </TouchableOpacity>

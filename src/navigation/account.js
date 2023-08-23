@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import CustomHeader from '@/components/header';
+import CustomHeader from '@/components/home-header';
 import React from 'react';
 import 'react-native-gesture-handler';
 import { useSelector } from 'react-redux';

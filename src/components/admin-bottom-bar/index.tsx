@@ -1,13 +1,14 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 
-import { ADMIN_ROUTES } from '@/navigation';
+import { ADMIN_ROUTES } from '@/navigation/routes.config';
 import { Ionicons } from '@expo/vector-icons';
 
 import MessageNav from '@/navigation/message';
 import AccountNav from '@/navigation/account';
 import AdminExploreNav from '@/navigation/adminExplore';
 import AdminRentRequest from '@/navigation/adminRentRequest';
+import { COLORS } from '@/constants';
 
 const Tab = createBottomTabNavigator();
 
@@ -31,10 +32,12 @@ const AdminBottomBar = () => {
   return (
     <Tab.Navigator
       initialRouteName={ADMIN_ROUTES.myAccomm.title}
-      sceneContainerStyle="#F3F4F6"
+      sceneContainerStyle={{
+        backgroundColor: '#F3F4F6',
+      }}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => RenderIcon({ focused, color, size, route }),
-        tabBarActiveTintColor: '#059669',
+        tabBarActiveTintColor: COLORS.PRIMARY,
         tabBarInactiveTintColor: '#71717A',
         tabBarStyle: {
           position: 'absolute',

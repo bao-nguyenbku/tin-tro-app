@@ -1,6 +1,7 @@
 import React from 'react'
 import { Box, Text, HStack } from 'native-base'
 import { Ionicons } from '@expo/vector-icons';
+import { COLORS } from '@/constants';
 
 const Utility = (props) => {
   const { item } = props;
@@ -14,7 +15,7 @@ const Utility = (props) => {
           space='1'
           marginLeft='3'
         >
-          <Ionicons name='checkmark-outline' size={24} color='#059669'/>
+          <Ionicons name='checkmark-outline' size={24} color={COLORS.PRIMARY}/>
           <Text>{utility}</Text>
         </HStack>
       ))}

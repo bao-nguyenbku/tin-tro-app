@@ -54,6 +54,7 @@ export const logIn = createAsyncThunk('users/login', async ({ email, password, d
     dispatch(saveUser({ token: response.data.access_token }));
     return response.data;
   } catch (err) {
+    console.log("🚀 ~ file: user.js:57 ~ logIn ~ err:", err)
     if (err.response) {
       return rejectWithValue({ statusCode: err.response.data.statusCode, message: err.response.data.message });
     }

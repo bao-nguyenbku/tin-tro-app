@@ -5,6 +5,7 @@ import React, { useEffect, useLayoutEffect } from 'react';
 import { Dimensions, RefreshControl } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAccomodationByOwnerId } from '@/store/reducer/accommodation';
+import { COLORS } from '@/constants';
 
 const mapRoomStatusToText = (roomStatus) => {
   switch (roomStatus) {
@@ -82,7 +83,7 @@ const AdminMyAccommodation = () => {
         <Pressable onPress={() => navigation.navigate('NewRoomForm')}>
           {({ isPressed, isHovered }) => (
             <Box bg={isPressed || isHovered ? 'muted.200' : 'transparent'}>
-              <AntDesign name="pluscircle" size={24} color="#059669" />
+              <AntDesign name="pluscircle" size={24} color={COLORS.PRIMARY} />
             </Box>
           )}
         </Pressable>

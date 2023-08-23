@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import CustomHeader from '@/components/header';
+import CustomHeader from '@/components/home-header';
 import RequestList from '@/screens/admin-rent-request/RequestList';
 import React from 'react';
 

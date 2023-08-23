@@ -10,6 +10,7 @@ import { io } from 'socket.io-client';
 import { disableBottomTabBar } from '@/utils';
 import { Platform, RefreshControl } from 'react-native';
 import { useTopHeight } from '@/hooks/useHeaderHeight';
+import { COLORS } from '@/constants';
 
 const socketUrl = process.env.EXPO_PUBLIC_API_BASE_URL + '/message';
 
@@ -142,7 +143,7 @@ const SendMessage = ({ route }) => {
             <Pressable onPress={() => sendMessageHandler()}>
               {({ isHovered }) => (
                 <Box backgroundColor={isHovered ? 'muted.200' : ''} mr={3.5}>
-                  <Octicons name="paper-airplane" size={24} color="#059669" />
+                  <Octicons name="paper-airplane" size={24} color={COLORS.PRIMARY} />
                 </Box>
               )}
             </Pressable>

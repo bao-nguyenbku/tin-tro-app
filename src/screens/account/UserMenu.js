@@ -4,7 +4,7 @@ import React from 'react';
 import { setCurrentUser } from '@/store/reducer/user';
 import { deleteToken } from '@/utils/token';
 
-const UserMenu = ({ setLoading, loading, dispatch, navigation }) => {
+export default function UserMenu ({ setLoading, loading, dispatch, navigation }) {
   const menu = [
     {
       id: 1,
@@ -103,4 +103,3 @@ const UserMenu = ({ setLoading, loading, dispatch, navigation }) => {
     </Box>
   );
 };
-export default UserMenu;
