@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 
-import { ADMIN_ROUTES } from '@/navigation/routes.config';
+import { ADMIN_ROUTES } from '@/navigation/map-screen-name';
 import { Ionicons } from '@expo/vector-icons';
 
 import MessageList from '@/screens/message/message-list';
@@ -9,18 +9,19 @@ import { COLORS } from '@/constants';
 import AdminMyAccommodation from '@/screens/admin-my-accommodation';
 import RequestList from '@/screens/admin-rent-request/request-list';
 import AccountMenu from '@/screens/account';
+import CustomHeader from '../common/custom-header';
 
 const Tab = createBottomTabNavigator();
 
 function renderIcon({ route, focused, color, size }) {
   let iconName;
-  if (route.name === ADMIN_ROUTES.myAccomm.title) {
+  if (route.name === ADMIN_ROUTES.MY_ACCOMMODATION) {
     iconName = focused ? 'home' : 'home-outline';
-  } else if (route.name === ADMIN_ROUTES.request.title) {
+  } else if (route.name === ADMIN_ROUTES.REQUEST) {
     iconName = focused ? 'file-tray-full' : 'file-tray-full-outline';
-  } else if (route.name === ADMIN_ROUTES.message.title) {
+  } else if (route.name === ADMIN_ROUTES.MESSAGE) {
     iconName = focused ? 'chatbox' : 'chatbox-outline';
-  } else if (route.name === ADMIN_ROUTES.account.title) {
+  } else if (route.name === ADMIN_ROUTES.ACCOUNT) {
     iconName = focused ? 'person' : 'person-outline';
   }
 
@@ -31,7 +32,6 @@ function renderIcon({ route, focused, color, size }) {
 export default function AdminBottomBar() {
   return (
     <Tab.Navigator
-      initialRouteName={ADMIN_ROUTES.myAccomm.title}
       sceneContainerStyle={{
         backgroundColor: COLORS.CONTAINER,
       }}
@@ -47,34 +47,35 @@ export default function AdminBottomBar() {
           right: 0,
           justifyContent: 'center',
         },
-        // TODO: Temporary disable bottom tab nav header
-        // header: (props) => <Header {...props} />
+        header: (props) => <CustomHeader {...props} />,
         headerShown: false,
       })}
     >
       <Tab.Screen
-        name='MyAccomm'
+        name={ADMIN_ROUTES.MY_ACCOMMODATION}
         children={(props) => <AdminMyAccommodation {...props} />}
         options={{
           title: 'Nhà trọ của tôi',
         }}
       />
       <Tab.Screen
-        name='Request'
+        name={ADMIN_ROUTES.REQUEST}
         children={(props) => <RequestList {...props} />}
         options={{
           title: 'Yêu cầu',
+          headerShown: true,
+          headerTitle: 'Danh sách yêu cầu thuê phòng'
         }}
       />
       <Tab.Screen
-        name='Message'
+        name={ADMIN_ROUTES.MESSAGE}
         children={(props) => <MessageList {...props} />}
         options={{
           title: 'Tin nhắn',
         }}
       />
       <Tab.Screen
-        name='Account'
+        name={ADMIN_ROUTES.ACCOUNT}
         children={(props) => <AccountMenu {...props} />}
         options={{
           title: 'Tài khoản',

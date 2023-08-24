@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { selectRentingState, getAllCheckoutRequest, acceptCheckoutRoom, cancelRequestCheckoutByOwner } from '@/store/reducer/renting';
 import { RefreshControl, TouchableOpacity } from 'react-native';
 import { ScrollView, VStack, Box, Text, useDisclose } from 'native-base';
@@ -16,7 +15,6 @@ const isUserRequest = (data) => {
 const AdminRequestCheckoutRoomScreen = (props) => {
   const { adminRenting } = useSelector(selectRentingState);
   const { loading, checkoutRequestList } = adminRenting;
-  const bottomBarHeight = useBottomTabBarHeight();
   const disclose = useDisclose();
   const dispatch = useDispatch();
   const handleConfirm = (item) => {
@@ -32,7 +30,7 @@ const AdminRequestCheckoutRoomScreen = (props) => {
     return <Loading />
   }
   return (
-    <Box flex={1} paddingBottom={bottomBarHeight + 20} p='4'>
+    <Box flex={1} p='4'>
       <ScrollView
         flex={1}
         refreshControl={

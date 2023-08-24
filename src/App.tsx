@@ -30,12 +30,15 @@ import NewRoomForm from '@/screens/admin-my-accommodation/NewRoomForm';
 import RequestList from '@/screens/admin-rent-request/request-list';
 import MessageList from '@/screens/message/message-list';
 import SendMessage from '@/screens/message/SendMessage';
+import { ADMIN_ROUTES, COMMON_ROUTES } from './navigation/map-screen-name';
 
 enableScreens(false);
 
 const Stack = createNativeStackNavigator();
 export default function App() {
-  const { currentUser, loggedIn, loading } = useAppSelector((state) => state.user);
+  const { currentUser, loggedIn, loading } = useAppSelector(
+    (state) => state.user
+  );
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(authMe());
@@ -47,7 +50,9 @@ export default function App() {
         <Loading />
       ) : (
         <Stack.Navigator
-          initialRouteName={!loading && loggedIn ? 'main-tab' : 'authentication'}
+          initialRouteName={
+            !loading && loggedIn ? 'main-tab' : 'authentication'
+          }
           screenOptions={{
             headerShown: true,
             headerTintColor: '#fff',
@@ -65,7 +70,10 @@ export default function App() {
                   headerShown: false,
                 }}
               >
-                <Stack.Screen name='main-tab' component={MainTabNavigator} />
+                <Stack.Screen
+                  name={COMMON_ROUTES.MAIN_TAB}
+                  component={MainTabNavigator}
+                />
               </Stack.Group>
 
               {/* Account Stack */}
@@ -74,10 +82,13 @@ export default function App() {
                   headerShown: true,
                 }}
               >
-                <Stack.Screen name='AccountMenu' component={AccountMenu} />
-{/**
- * =================TENANT STACK ===================
- */}
+                <Stack.Screen
+                  name={COMMON_ROUTES.ACCOUNT}
+                  component={AccountMenu}
+                />
+                {/**
+                 * =================TENANT STACK ===================
+                 */}
                 {currentUser && currentUser.role === USER_ROLE.RENTER && (
                   <>
                     {/* Accommodation Stack */}
@@ -99,7 +110,9 @@ export default function App() {
                         options={{
                           title: 'Chi tiết',
                         }}
-                        children={(props) => <AccommodationDetailsScreen {...props} />}
+                        children={(props) => (
+                          <AccommodationDetailsScreen {...props} />
+                        )}
                       />
                       <Stack.Screen
                         name='SearchAccommodation'
@@ -118,9 +131,15 @@ export default function App() {
                     >
                       <Stack.Screen name='room-menu' component={RoomMenu} />
                       <Stack.Screen name='parking' component={ParkingScreen} />
-                      <Stack.Screen name='register-parking' component={RegisterParking} />
+                      <Stack.Screen
+                        name='register-parking'
+                        component={RegisterParking}
+                      />
                       <Stack.Screen name='wifi' component={WifiScreen} />
-                      <Stack.Screen name='register-wifi' component={RegisterWifi} />
+                      <Stack.Screen
+                        name='register-wifi'
+                        component={RegisterWifi}
+                      />
                     </Stack.Group>
 
                     {/* Renter Account Menu Stack  */}
@@ -142,14 +161,17 @@ export default function App() {
                     </Stack.Group>
                   </>
                 )}
-{/**
- * =================ADMIN STACK ===================
- */}
+                {/**
+                 * =================ADMIN STACK ===================
+                 */}
                 {currentUser && currentUser.role === USER_ROLE.OWNER && (
                   <>
                     {/* ======== ADMIN MANAGE ACCOMMODATION ======== */}
                     <Stack.Group>
-                      <Stack.Screen name='AdminAccommodationList' component={AdminMyAccommodation} />
+                      <Stack.Screen
+                        name='AdminAccommodationList'
+                        component={AdminMyAccommodation}
+                      />
                       <Stack.Screen
                         name='NewRoomForm'
                         options={{
@@ -162,7 +184,7 @@ export default function App() {
                         component={NewRoomForm}
                       />
                     </Stack.Group>
-                     {/* ======== ADMIN MANAGE REQUEST RENTING ======== */}
+                    {/* ======== ADMIN MANAGE REQUEST RENTING ======== */}
                     <Stack.Group>
                       <Stack.Screen
                         name='AdminRentRequests'
@@ -205,25 +227,25 @@ export default function App() {
                         options={{
                           title: 'Thống kê',
                         }}
-                        name='AdminRoomStatistics'
+                        name={ADMIN_ROUTES.ROOM_STATISTICS}
                         component={AdminRoomStatistics}
                       />
                       <Stack.Screen
-                        name='RentRequestList'
+                        name={ADMIN_ROUTES.RENT_REQUEST_LIST}
                         component={RentRequestScreen}
                         options={{
                           title: 'Danh sách yêu cầu thuê phòng',
                         }}
                       />
                       <Stack.Screen
-                        name='AdminRequestCheckoutRoom'
+                        name={ADMIN_ROUTES.REQUEST_CHECKOUT_ROOM}
                         component={AdminRequestCheckoutRoomScreen}
                         options={{
                           title: 'Yêu cầu trả phòng',
                         }}
                       />
                       <Stack.Screen
-                        name='AdminCreateRequestCheckoutRoom'
+                        name={ADMIN_ROUTES.CREATE_REQUEST_CHECKOUT_ROOM}
                         component={CreateCheckoutRequestScreen}
                         options={{
                           title: 'Tạo yêu cầu trả phòng',
@@ -241,8 +263,14 @@ export default function App() {
                 headerShown: false,
               }}
             >
-              <Stack.Screen name='Login' component={LoginScreen} />
-              <Stack.Screen name='Register' component={RegisterScreen} />
+              <Stack.Screen
+                name={COMMON_ROUTES.LOGIN}
+                component={LoginScreen}
+              />
+              <Stack.Screen
+                name={COMMON_ROUTES.REGISTER}
+                component={RegisterScreen}
+              />
             </Stack.Group>
           )}
         </Stack.Navigator>

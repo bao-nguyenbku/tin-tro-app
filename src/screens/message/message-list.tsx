@@ -8,7 +8,7 @@ import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { RefreshControl } from 'react-native';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 
-export default function MessageList() {
+export default function MessageList(props: any) {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
   const { messageSections, loading, error } = useAppSelector((state) => state.message);

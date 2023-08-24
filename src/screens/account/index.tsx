@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import * as FormData from 'form-data';
-import { Avatar, Center, Pressable, ScrollView, Text, useToast, VStack } from 'native-base';
+import {
+  Avatar,
+  Center,
+  Pressable,
+  Text,
+  useToast,
+  VStack,
+} from 'native-base';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { RefreshControl } from 'react-native';
-import { authMe } from '@/store/reducer/user';
+import { SafeAreaView } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import sendFileRequest from '@/utils/sendFileRequest';
 import CustomToast from '@/components/custom-toast';
@@ -13,18 +19,18 @@ import AdminMenu from './AdminMenu';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { USER_ROLE } from '@/types/data-types';
 
-const mapRoleToText = (role) => {
+const mapRoleToText = (role: string | USER_ROLE) => {
   switch (role) {
-    case 'USER':
+    case USER_ROLE.RENTER:
       return 'Thuê trọ';
-    case 'ADMIN':
-      return 'Quản trị';
+    case USER_ROLE.OWNER:
+      return 'Quản trị viên';
     default:
       return 'Khách';
   }
 };
 
-export default function AccountMenu (props) {
+export default function AccountMenu(props: any) {
   const user = useAppSelector((state) => state.user);
   const [loading, setLoading] = useState<boolean>(false);
   const [image, setImage] = useState(null);
@@ -52,7 +58,12 @@ export default function AccountMenu (props) {
       try {
         await sendFileRequest.post('/users/upload-avatar', formData);
         toast.show({
-          render: () => <CustomToast title='Cập nhật ảnh đại diện thành công.' status='success' />,
+          render: () => (
+            <CustomToast
+              title='Cập nhật ảnh đại diện thành công.'
+              status='success'
+            />
+          ),
           placement: 'top',
         });
         setImage(result.assets[0].uri);
@@ -65,7 +76,7 @@ export default function AccountMenu (props) {
     return <Loading />;
   }
   return (
-    <ScrollView mb={12} refreshControl={<RefreshControl refreshing={user.loading} onRefresh={() => dispatch(authMe())} />}>
+    <SafeAreaView style={{ flex: 1 }}>
       <VStack py={4}>
         <Center>
           <Pressable onPress={pickImage}>
@@ -76,21 +87,37 @@ export default function AccountMenu (props) {
               source={{
                 uri: !image ? user.currentUser.avatar : image,
               }}
-              alt={user.currentUser.name}
             >
-              <Ionicons name='image-outline' size={40}/>
+              <Ionicons name='image-outline' size={40} />
             </Avatar>
           </Pressable>
-          <Text pt={2} color='tertiary.600' bold fontSize='2xl'>
+          <Text pt={2} bold fontSize='2xl'>
             {user.currentUser.name}
           </Text>
-          <Text color='muted.500'>{user.currentUser.role ? mapRoleToText(user.currentUser.role) : 'Khách'}</Text>
+          <Text color='muted.500'>
+            {user.currentUser.role
+              ? mapRoleToText(user.currentUser.role)
+              : 'Khách'}
+          </Text>
         </Center>
 
-        {user.currentUser.role === USER_ROLE.RENTER && <UserMenu loading={loading} setLoading={setLoading} dispatch={dispatch} {...props} />}
-        {user.currentUser.role === USER_ROLE.OWNER && <AdminMenu loading={loading} setLoading={setLoading} dispatch={dispatch} {...props} />}
+        {user.currentUser.role === USER_ROLE.RENTER && (
+          <UserMenu
+            loading={loading}
+            setLoading={setLoading}
+            dispatch={dispatch}
+            {...props}
+          />
+        )}
+        {user.currentUser.role === USER_ROLE.OWNER && (
+          <AdminMenu
+            loading={loading}
+            setLoading={setLoading}
+            dispatch={dispatch}
+            {...props}
+          />
+        )}
       </VStack>
-    </ScrollView>
+    </SafeAreaView>
   );
-};
-
+}

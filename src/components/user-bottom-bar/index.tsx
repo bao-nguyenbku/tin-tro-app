@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { ROUTES } from '@/navigation/routes.config';
+import { RENTER_ROUTES } from '@/navigation/map-screen-name';
 import { Ionicons } from '@expo/vector-icons';
 import AccommodationList from '@/screens/explore/accommodation-list';
 import RoomMenu from '@/screens/my-room/RoomMenu';
@@ -13,13 +13,13 @@ const Tab = createBottomTabNavigator();
 
 const renderIcon = ({ route, focused, color, size }) => {
   let iconName;
-  if (route.name === ROUTES.explore.title) {
+  if (route.name === RENTER_ROUTES.EXPLORE) {
     iconName = focused ? 'home' : 'home-outline';
-  } else if (route.name === ROUTES.myRoom.title) {
+  } else if (route.name === RENTER_ROUTES.MY_ROOM) {
     iconName = focused ? 'albums' : 'albums-outline';
-  } else if (route.name === ROUTES.message.title) {
+  } else if (route.name === RENTER_ROUTES.MESSAGE) {
     iconName = focused ? 'chatbox' : 'chatbox-outline';
-  } else if (route.name === ROUTES.account.title) {
+  } else if (route.name === RENTER_ROUTES.ACCOUNT) {
     iconName = focused ? 'person' : 'person-outline';
   }
 
@@ -30,7 +30,7 @@ const renderIcon = ({ route, focused, color, size }) => {
 export default function UserBottomBar(props: any) {
   return (
     <Tab.Navigator
-      initialRouteName='Explore'
+      initialRouteName={RENTER_ROUTES.EXPLORE}
       sceneContainerStyle={{
         backgroundColor: COLORS.CONTAINER,
       }}
@@ -47,7 +47,6 @@ export default function UserBottomBar(props: any) {
           justifyContent: 'center',
         },
         // TODO: Temporarily disable bottom tab nav header
-        // header: (props) => <Header {...props} />,
         headerTintColor: COLORS.WHITE,
         headerStyle: {
           backgroundColor: COLORS.PRIMARY,
@@ -56,29 +55,29 @@ export default function UserBottomBar(props: any) {
       })}
     >
       <Tab.Screen
-        name='Explore'
+        name={RENTER_ROUTES.EXPLORE}
         options={{
           title: 'Tìm phòng trọ',
-          // header: (props) => <HomeHeader {...props} />,
+          header: (props) => <HomeHeader {...props} />,
         }}
         children={() => <AccommodationList {...props} />}
       />
       <Tab.Screen
-        name='MyRoom'
+        name={RENTER_ROUTES.MY_ROOM}
         options={{
           title: 'Phòng của tôi',
         }}
         children={() => <RoomMenu {...props} />}
       />
       <Tab.Screen
-        name='Message'
+        name={RENTER_ROUTES.MESSAGE}
         options={{
           title: 'Tin nhắn',
         }}
         children={() => <MessageList {...props} />}
       />
       <Tab.Screen
-        name='Account'
+        name={RENTER_ROUTES.ACCOUNT}
         options={{
           title: 'Tài khoản',
         }}
