@@ -29,8 +29,12 @@ import AdminMyAccommodation from '@/screens/admin-my-accommodation';
 import CreateNewRoom from '@/screens/admin-my-accommodation/create-new-room';
 import RequestList from '@/screens/admin-rent-request/request-list';
 import MessageList from '@/screens/message/message-list';
-import SendMessage from '@/screens/message/SendMessage';
-import { ADMIN_ROUTES, COMMON_ROUTES } from './navigation/map-screen-name';
+import MessageBox from '@/screens/message/message-box';
+import {
+  ADMIN_ROUTES,
+  COMMON_ROUTES,
+  RENTER_ROUTES,
+} from './navigation/map-screen-name';
 import CustomHeader from './components/common/custom-header';
 
 enableScreens(false);
@@ -88,6 +92,28 @@ export default function App() {
                   name={COMMON_ROUTES.ACCOUNT}
                   component={AccountMenu}
                 />
+                {/* ======== MESSAGE ======== */}
+                <Stack.Screen
+                  name={RENTER_ROUTES.MESSAGE}
+                  options={{
+                    headerShown: true,
+                    // header: (stackProps) => <CustomHeader {...stackProps} />,
+                    headerBackTitleVisible: false,
+                    headerTitleAlign: 'center',
+                    title: 'Tin nhắn',
+                  }}
+                  component={MessageList}
+                />
+                <Stack.Screen
+                  name='send-message'
+                  component={MessageBox}
+                  options={({ route, navigation }) => ({
+                    // header: () => <TitleHeaderOfMessage navigation={navigation} name={route.params.name} avatar={route.params.avatar} />,
+
+                    headerTitleAlign: 'center',
+                  })}
+                />
+
                 {/**
                  * =================TENANT STACK ===================
                  */}
@@ -198,29 +224,6 @@ export default function App() {
                           title: 'Yêu cầu thuê phòng',
                         }}
                         component={RequestList}
-                      />
-                    </Stack.Group>
-                    {/* ======== MESSAGE ======== */}
-                    <Stack.Group>
-                      <Stack.Screen
-                        name='MessageList'
-                        options={{
-                          headerShown: true,
-                          // header: (stackProps) => <CustomHeader {...stackProps} />,
-                          headerBackTitleVisible: false,
-                          headerTitleAlign: 'center',
-                          title: 'Tin nhắn',
-                        }}
-                        component={MessageList}
-                      />
-                      <Stack.Screen
-                        name='SendMessage'
-                        component={SendMessage}
-                        options={({ route, navigation }) => ({
-                          // header: () => <TitleHeaderOfMessageScreen navigation={navigation} name={route.params.name} avatar={route.params.avatar} />,
-
-                          headerTitleAlign: 'center',
-                        })}
                       />
                     </Stack.Group>
                     {/* ======= MENU OPTION ======= */}

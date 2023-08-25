@@ -12,7 +12,6 @@ import store from '@/store';
 
 SplashScreen.preventAutoHideAsync();
 
-
 function Entry() {
   const [isReady, setIsReady] = useState(false);
 
@@ -23,12 +22,12 @@ function Entry() {
   if (isReady) {
     return (
       <Provider store={store}>
-      <NavigationContainer theme={stackTheme}>
-        <NativeBaseProvider config={config} theme={theme}>
-          <StatusBar style='auto' />
-          <App />
-        </NativeBaseProvider>
-      </NavigationContainer>
+        <NavigationContainer theme={stackTheme}>
+          <NativeBaseProvider config={config} theme={theme}>
+            <StatusBar style='auto' />
+            <App />
+          </NativeBaseProvider>
+        </NavigationContainer>
       </Provider>
     );
   }

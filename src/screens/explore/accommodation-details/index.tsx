@@ -15,11 +15,15 @@ import Utility from './Utility';
 import { COLORS } from '@/constants';
 
 const isCurrentRenting = (roomInfo, item) => {
-  return roomInfo.data?.accommodationId === item.id && roomInfo.data?.status === 'RENTING';
+  return (
+    roomInfo.data?.accommodationId === item.id &&
+    roomInfo.data?.status === 'RENTING'
+  );
 };
 
 export default function AccommodationDetailsScreen(props: any) {
   const navigation = useNavigation();
+  console.log("🚀 ~ file: index.tsx:26 ~ AccommodationDetailsScreen ~ navigation:", navigation.getState())
   const { route } = props;
   const item = route.params ? route.params.item : undefined;
   const { roomInfo } = useAppSelector(selectRentingState);
@@ -27,15 +31,13 @@ export default function AccommodationDetailsScreen(props: any) {
 
   const handlePressMessageIcon = () => {
     const owner = item?.owner;
-
-    navigation.getParent().navigate('Message', {
-      screen: 'SendMessage',
+    navigation.navigate('send-message', {
+      // screen: 'send-message',
       params: {
         fromId: owner?.id,
         avatar: owner?.avatar,
         name: owner?.name,
       },
-      initial: false,
     });
   };
   return (
@@ -57,7 +59,16 @@ export default function AccommodationDetailsScreen(props: any) {
                 size='full'
                 rounded='12'
               />
-              <Box alignItems='center' flexDirection='row' position='absolute' top={1} right={1} bgColor='black:alpha.40' rounded='xl' p='1'>
+              <Box
+                alignItems='center'
+                flexDirection='row'
+                position='absolute'
+                top={1}
+                right={1}
+                bgColor='black:alpha.40'
+                rounded='xl'
+                p='1'
+              >
                 <Ionicons name='star-sharp' size={20} color='#FACC15' />
                 <Text marginLeft='4px' color='white'>
                   {item?.reviewStar}
@@ -68,14 +79,21 @@ export default function AccommodationDetailsScreen(props: any) {
               {item?.name}
             </Text>
             <CommonInfo item={item} />
-            <OwnerContact item={item} handlePressMessageIcon={handlePressMessageIcon} />
+            <OwnerContact
+              item={item}
+              handlePressMessageIcon={handlePressMessageIcon}
+            />
             <Description item={item} />
             <Utility item={item} />
             <ImageGallery images={item?.images} />
           </Box>
         </Box>
       </ScrollView>
-      <Box px='4' pb='4'>{!isCurrentRenting(roomInfo, item) && <RequestRentalButton item={item} />}</Box>
+      <Box px='4' pb='4'>
+        {!isCurrentRenting(roomInfo, item) && (
+          <RequestRentalButton item={item} />
+        )}
+      </Box>
     </>
   );
 }

@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { fetchMessageSections } from '@/store/reducer/message';
 import Loading from '@/components/loading';
-import Error from '@/components/error';
+import ErrorMessage from '@/components/common/error-message';
 import { Avatar, Flex, Heading, HStack, Pressable, ScrollView, Text, VStack } from 'native-base';
 import { formatDate } from '@/utils';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { RefreshControl } from 'react-native';
 import { useAppDispatch, useAppSelector } from '@/hooks';
+import EmptyMessage from '@/components/common/empty-message';
 
 export default function MessageList(props: any) {
   const dispatch = useAppDispatch();
@@ -20,12 +21,10 @@ export default function MessageList(props: any) {
   }, [isFocus]);
 
   if (loading) return <Loading />;
-  if (error) return <Error message={error} />;
+  if (error) return <ErrorMessage errors={error} />;
 
   return !messageSections.filter((messageSection) => messageSection.messages.length > 0).length ? (
-    <Flex alignSelf='center' justifyContent='center' alignItems='center' h='full'>
-      <Text color='coolGray.500'>Bạn không có tin nhắn nào</Text>
-    </Flex>
+    <EmptyMessage message='Bạn không có tin nhắn nào'/>
   ) : (
     <ScrollView
       refreshControl={<RefreshControl refreshing={loading} onRefresh={() => dispatch(fetchMessageSections())} />}

@@ -117,7 +117,7 @@ export default function CreateNewRooom({ navigation, route }) {
   return (
     <KeyboardAvoidingView w='100%' alignItems='center' flex={1}>
       <ScrollView w='100%' py={4} h='full'>
-        {/* <Center>
+        <Center>
           <Heading fontSize={20}> Thông tin chung </Heading>
           {isEdit && (
             <Badge
@@ -130,7 +130,7 @@ export default function CreateNewRooom({ navigation, route }) {
             </Badge>
           )}
           <Text color='danger.500'> {error} </Text>
-        </Center> */}
+        </Center>
         <Box alignItems='center' h='full' p='4'>
           <Formik
             validationSchema={newRoomSchema}

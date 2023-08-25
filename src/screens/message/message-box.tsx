@@ -1,6 +1,16 @@
 import { Octicons } from '@expo/vector-icons';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
-import { Avatar, Box, Flex, Input, Pressable, ScrollView, Text, VStack, KeyboardAvoidingView } from 'native-base';
+import {
+  Avatar,
+  Box,
+  Flex,
+  Input,
+  Pressable,
+  ScrollView,
+  Text,
+  VStack,
+  KeyboardAvoidingView,
+} from 'native-base';
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { pushMessage, sendMessage, setMessages } from '@/store/reducer/message';
@@ -10,19 +20,20 @@ import { io } from 'socket.io-client';
 import { disableBottomTabBar } from '@/utils';
 import { Platform, RefreshControl } from 'react-native';
 import { useTopHeight } from '@/hooks/useHeaderHeight';
-import { COLORS } from '@/constants';
+import { COLORS, API_BASE_URL } from '@/constants';
+import { useAppDispatch, useAppSelector } from '@/hooks';
 
-const socketUrl = process.env.EXPO_PUBLIC_API_BASE_URL + '/message';
+const socketUrl = API_BASE_URL + '/message';
 
-const SendMessage = ({ route }) => {
+export default function MessageBox({ route }) {
   const { fromId } = route.params;
   const messageSectionId = route.params?.messageSectionId;
   const topHeight = useTopHeight();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const isFocus = useIsFocused();
-  const currentUser = useSelector((state) => state.user.currentUser);
+  const currentUser = useAppSelector((state) => state.user.currentUser);
   const [messageText, setMessageText] = React.useState('');
-  const message = useSelector((state) => state.message);
+  const message = useAppSelector((state) => state.message);
   const allMessagesFromSection = message.messages;
   const navigation = useNavigation();
   const socketRef = useRef();
@@ -98,8 +109,13 @@ const SendMessage = ({ route }) => {
             scrollRef.current = e;
           }}
           automaticallyAdjustContentInsets
-          refreshControl={<RefreshControl refreshing={message.loading} onRefresh={() => socketRef.current.emit('fetch-all-messages')} />}
-          h="90%"
+          refreshControl={
+            <RefreshControl
+              refreshing={message.loading}
+              onRefresh={() => socketRef.current.emit('fetch-all-messages')}
+            />
+          }
+          h='90%'
         >
           {allMessagesFromSection?.map((messageInSection) => {
             if (currentUser.id === messageInSection.fromId) {
@@ -108,17 +124,37 @@ const SendMessage = ({ route }) => {
               pos = 'row';
             }
             return (
-              <Flex pb={3} my={1} key={messageInSection.id} w="100%">
-                <Flex maxWidth={pos === 'row' ? '75%' : '80%'} left={pos === 'row-reverse' ? 20 : 0} alignItems="flex-end" direction={pos}>
-                  <Avatar mx={1.5} size="sm" source={{ uri: messageInSection.from.avatar }} />
+              <Flex pb={3} my={1} key={messageInSection.id} w='100%'>
+                <Flex
+                  maxWidth={pos === 'row' ? '75%' : '80%'}
+                  left={pos === 'row-reverse' ? 20 : 0}
+                  alignItems='flex-end'
+                  direction={pos}
+                >
+                  <Avatar
+                    mx={1.5}
+                    size='sm'
+                    source={{ uri: messageInSection.from.avatar }}
+                  />
                   <Box
-                    alignItems="center"
+                    alignItems='center'
                     py={1.5}
                     px={3}
-                    borderRadius="2xl"
-                    backgroundColor={messageInSection.fromId === currentUser.id ? 'tertiary.600' : '#fff'}
+                    borderRadius='2xl'
+                    backgroundColor={
+                      messageInSection.fromId === currentUser.id
+                        ? 'tertiary.600'
+                        : '#fff'
+                    }
                   >
-                    <Text color={messageInSection.fromId === currentUser.id ? '#fff' : '#000'} fontSize={16}>
+                    <Text
+                      color={
+                        messageInSection.fromId === currentUser.id
+                          ? '#fff'
+                          : '#000'
+                      }
+                      fontSize={16}
+                    >
                       {messageInSection.text}
                     </Text>
                   </Box>
@@ -129,21 +165,25 @@ const SendMessage = ({ route }) => {
         </ScrollView>
         <Input
           borderRadius={999}
-          backgroundColor="#fff"
+          backgroundColor='#fff'
           value={messageText}
-          flexWrap="wrap"
+          flexWrap='wrap'
           bottom={3}
           py={2}
           px={4}
           mb={3}
-          placeholder="Message"
-          size="2xl"
+          placeholder='Message'
+          size='2xl'
           onChangeText={(text) => setMessageText(text)}
           InputRightElement={
             <Pressable onPress={() => sendMessageHandler()}>
               {({ isHovered }) => (
                 <Box backgroundColor={isHovered ? 'muted.200' : ''} mr={3.5}>
-                  <Octicons name="paper-airplane" size={24} color={COLORS.PRIMARY} />
+                  <Octicons
+                    name='paper-airplane'
+                    size={24}
+                    color={COLORS.PRIMARY}
+                  />
                 </Box>
               )}
             </Pressable>
@@ -156,6 +196,4 @@ const SendMessage = ({ route }) => {
       </VStack>
     </KeyboardAvoidingView>
   );
-};
-
-export default SendMessage;
+}
