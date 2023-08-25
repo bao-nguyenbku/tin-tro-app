@@ -1,5 +1,6 @@
 export const ADMIN_ROUTES = {
   MY_ACCOMMODATION: 'my-accommodation',
+  CREATE_NEW_ROOM: 'create-new-room',
   REQUEST: 'request',
   MESSAGE: 'message-list',
   ACCOUNT: 'account',

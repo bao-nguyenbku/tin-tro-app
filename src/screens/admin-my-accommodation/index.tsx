@@ -1,12 +1,22 @@
-import { AntDesign } from '@expo/vector-icons';
-import { useIsFocused, useNavigation } from '@react-navigation/native';
-import { Box, Center, Flex, Heading, HStack, Image, Pressable, ScrollView, Text, VStack } from 'native-base';
-import React, { useEffect, useLayoutEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
+import { Ionicons } from '@expo/vector-icons';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import {
+  Box,
+  Center,
+  FlatList,
+  Flex,
+  Heading,
+  HStack,
+  Image,
+  Pressable,
+  Text,
+  VStack,
+} from 'native-base';
 import { Dimensions, RefreshControl } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
 import { fetchAccomodationByOwnerId } from '@/store/reducer/accommodation';
-import { COLORS } from '@/constants';
 import { useAppDispatch, useAppSelector } from '@/hooks';
+import { ADMIN_ROUTES } from '@/navigation/map-screen-name';
 
 const mapRoomStatusToText = (roomStatus) => {
   switch (roomStatus) {
@@ -21,19 +31,38 @@ const mapRoomStatusToText = (roomStatus) => {
 
 const HeaderAdminMyAccomodation = ({ details }) => {
   const { width } = Dimensions.get('window');
-  const countRentingRoom = details.rooms.filter((room) => room.status === 'RENTING').length;
-  const countAvailableRoom = details.rooms.filter((room) => room.status === 'AVAILABLE').length;
+  const countRentingRoom = details.rooms.filter(
+    (room) => room.status === 'RENTING'
+  ).length;
+  const countAvailableRoom = details.rooms.filter(
+    (room) => room.status === 'AVAILABLE'
+  ).length;
 
   return (
     <VStack px={4} h='165px'>
       <Center>
-        <Image source={{ uri: details.thumbnail }} alt={details.name} size={width} position='absolute' blurRadius={2} />
+        <Image
+          source={{ uri: details.thumbnail }}
+          alt={details.name}
+          size={width}
+          position='absolute'
+          blurRadius={2}
+        />
       </Center>
-      <VStack px={4} bg='#fff' py={2} borderRadius={12} height='3/4' zIndex={2} top={100}>
+      <VStack
+        px={4}
+        bg='#fff'
+        py={2}
+        borderRadius={12}
+        height='3/4'
+        zIndex={2}
+        top={100}
+      >
         <Center w='full' mb={4}>
           <Heading size='lg'>{details.name}</Heading>
           <Text color='muted.500'>
-            {details.addressNumber}, {details.addressStreet}, {details.addressDistrict}
+            {details.addressNumber}, {details.addressStreet},{' '}
+            {details.addressDistrict}
           </Text>
         </Center>
         <Flex justify='space-between' flexDir='row'>
@@ -49,17 +78,16 @@ export default function AdminMyAccommodation(props: any) {
   const accommodation = useAppSelector((state) => state.accommodation);
   const dispatch = useAppDispatch();
   const navigation = useNavigation();
-  const isFocused = useIsFocused();
-  useEffect(() => {
-    dispatch(fetchAccomodationByOwnerId());
-  }, [isFocused]);
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(fetchAccomodationByOwnerId());
+    }, [])
+  );
 
   const details = accommodation.accommodationDetails;
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (details.thumbnail) {
       navigation.setOptions({
-        headerShown: true,
-        headerTintColor: '#fff',
         header: () => <HeaderAdminMyAccomodation details={details} />,
       });
     }
@@ -73,47 +101,107 @@ export default function AdminMyAccommodation(props: any) {
   }, [details]);
 
   return (
-    <ScrollView
-      refreshControl={<RefreshControl refreshing={accommodation.loading} onRefresh={() => dispatch(fetchAccomodationByOwnerId())} />}
-      px={3.5}
-      pb={24}
-      zIndex={1}
-    >
-      <HStack pt={24} mb={6} alignItems='center' justifyContent='space-between'>
+    <Box px='4'>
+      <HStack pt={24} alignItems='center' justifyContent='space-between'>
         <Text fontSize={20}>Phòng trọ của tôi</Text>
-        <Pressable onPress={() => navigation.navigate('NewRoomForm')}>
-          {({ isPressed, isHovered }) => (
-            <Box bg={isPressed || isHovered ? 'muted.200' : 'transparent'}>
-              <AntDesign name='pluscircle' size={24} color={COLORS.PRIMARY} />
-            </Box>
-          )}
+        <Pressable
+          onPress={() =>
+            navigation.navigate(ADMIN_ROUTES.CREATE_NEW_ROOM as never)
+          }
+          bgColor='primary.500'
+          borderRadius='full'
+          p='2'
+        >
+          <Ionicons
+            name='add-outline'
+            size={24}
+            color='white'
+            style={{ alignItems: 'center', justifyContent: 'center' }}
+          />
         </Pressable>
       </HStack>
-      <HStack flexWrap='wrap' space={2}>
-        {details.rooms.map((room) => (
-          <Pressable key={room.id} w='31%' onPress={() => navigation.navigate('NewRoomForm', { isEdit: true, room })}>
-            <Center mb={2} alignItems='center' borderRadius={12} bg='#fff'>
-              <VStack alignItems='center' justifyContent='center' py={2.5} space={2}>
-                <Box
-                  w={84}
-                  h={84}
+
+      <FlatList
+        h='full'
+        pt='6'
+        _contentContainerStyle={{
+          flexDirection: 'row',
+        }}
+        refreshControl={
+          <RefreshControl
+            refreshing={accommodation.loading}
+            onRefresh={() => dispatch(fetchAccomodationByOwnerId())}
+          />
+        }
+        data={details.rooms}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => {
+          return (
+            <Pressable
+              key={item.id}
+              w='full'
+              p='1'
+              onPress={() =>
+                navigation.navigate(ADMIN_ROUTES.CREATE_NEW_ROOM, {
+                  isEdit: true,
+                  room: item,
+                })
+              }
+            >
+              <Center
+                bgColor='white'
+                p='1'
+                px='2'
+                borderRadius='xl'
+                shadow='2'
+                style={{
+                  shadowRadius: 10,
+                  shadowOpacity: 0.1,
+                }}
+              >
+                <VStack
                   alignItems='center'
                   justifyContent='center'
-                  bg={room.status === 'AVAILABLE' ? 'success.200' : 'error.100'}
-                  borderRadius='full'
+                  py={2.5}
+                  space={2}
                 >
-                  <Text isTruncated fontWeight='700' noOfLines={1} color={room.status === 'AVAILABLE' ? 'tertiary.600' : 'error.600'}>
-                    {room.roomName}
+                  <Box
+                    w={84}
+                    h={84}
+                    alignItems='center'
+                    justifyContent='center'
+                    bg={
+                      item.status === 'AVAILABLE' ? 'success.200' : 'error.100'
+                    }
+                    borderRadius='full'
+                  >
+                    <Text
+                      isTruncated
+                      fontWeight='700'
+                      noOfLines={1}
+                      color={
+                        item.status === 'AVAILABLE'
+                          ? 'tertiary.600'
+                          : 'error.600'
+                      }
+                    >
+                      {item.roomName}
+                    </Text>
+                  </Box>
+                  <Text
+                    bold
+                    color={
+                      item.status === 'AVAILABLE' ? 'tertiary.600' : 'error.600'
+                    }
+                  >
+                    {mapRoomStatusToText(item.status)}
                   </Text>
-                </Box>
-                <Text bold color={room.status === 'AVAILABLE' ? 'tertiary.600' : 'error.600'}>
-                  {mapRoomStatusToText(room.status)}
-                </Text>
-              </VStack>
-            </Center>
-          </Pressable>
-        ))}
-      </HStack>
-    </ScrollView>
+                </VStack>
+              </Center>
+            </Pressable>
+          );
+        }}
+      />
+    </Box>
   );
 }

@@ -1,4 +1,4 @@
-import request from '@/utils/axios';
+import { request } from '@/utils/request';
 
 const prefix = '/parking';
 

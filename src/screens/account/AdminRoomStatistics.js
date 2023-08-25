@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import request from '@/utils/axios';
+import { request } from '@/utils/request';
 import Loading from '@/components/loading';
 import { Center, Flex, Heading, VStack } from 'native-base';
 import { PieChart } from 'react-native-chart-kit';
 import { Dimensions } from 'react-native';
-import roomStatusConstanst from '@/utils/roomStatus';
 
 const mapRoomStatusToText = (status) => {
   switch (status) {
@@ -28,7 +27,7 @@ function mapRoomStatusToColor(status) {
   }
 }
 
-const roomStatus = Object.values(roomStatusConstanst);
+const roomStatus = ['AVAILABLE', 'RENTING'];
 
 const chartConfig = {
   backgroundGradientFrom: '#1E2923',

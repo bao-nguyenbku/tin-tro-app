@@ -9,7 +9,7 @@ import { register, resetData } from '@/store/reducer/user';
 import * as yup from 'yup';
 import { Formik } from 'formik';
 
-import ErrorMessage from '@/components/ErrorFormMessage';
+import ErrorMessage from '@/components/common/error-message';
 
 const registerSchema = yup.object().shape({
   email: yup.string().email('Email không hợp lệ').required('Email không được để trống'),

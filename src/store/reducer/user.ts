@@ -1,7 +1,11 @@
-import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit';
+import {
+  createSlice,
+  createAsyncThunk,
+  createSelector,
+} from '@reduxjs/toolkit';
 import { jwtParse, setToken } from '@/utils/token';
 
-import request from '@/utils/axios';
+import { request } from '@/utils/request';
 import { IUser } from '@/types/data-types';
 
 interface UserState {
@@ -23,66 +27,95 @@ const initialState: UserState = {
 };
 
 // --------------------------- THUNKS ---------------------------
-export const register = createAsyncThunk('users/register', async ({ name, email, phone, password, reEnterPassword, done }, { rejectWithValue }) => {
-  try {
-    const response = await request.post('/auth/register', {
-      name,
-      email,
-      phone,
-      password,
-      reEnterPassword,
-    });
-    if (done) done();
-    return response.data;
-  } catch (err) {
-    if (!err.response) {
-      return rejectWithValue({ statusCode: 500, message: err.message });
+export const register = createAsyncThunk(
+  'users/register',
+  async (
+    { name, email, phone, password, reEnterPassword, done },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await request.post('/auth/register', {
+        name,
+        email,
+        phone,
+        password,
+        reEnterPassword,
+      });
+      if (done) done();
+      return response.data;
+    } catch (err) {
+      if (!err.response) {
+        return rejectWithValue({ statusCode: 500, message: err.message });
+      }
+      return rejectWithValue({
+        statusCode: err.response.data.statusCode,
+        message: err.response.data.message,
+      });
     }
-    return rejectWithValue({ statusCode: err.response.data.statusCode, message: err.response.data.message });
   }
-});
+);
 
-export const saveUser = createAsyncThunk('users/saveUser', async ({ token }, { rejectWithValue }) => {
-  try {
-    const user = jwtParse(token);
-    await setToken(token);
-    return user;
-  } catch (err) {
-    return rejectWithValue({ message: err?.message || 'Something went wrong!' });
+export const saveUser = createAsyncThunk(
+  'users/saveUser',
+  async ({ token }, { rejectWithValue }) => {
+    try {
+      const user = jwtParse(token);
+      await setToken(token);
+      return user;
+    } catch (err) {
+      return rejectWithValue({
+        message: err?.message || 'Something went wrong!',
+      });
+    }
   }
-});
+);
 
-export const logIn = createAsyncThunk('users/login', async ({ email, password, done }, { rejectWithValue, dispatch }) => {
-  try {
-    const response = await request.post('/auth/login', {
-      email,
-      password,
-    });
-    if (done) done();
-    dispatch(saveUser({ token: response.data.access_token }));
-    return response.data;
-  } catch (err) {
-    if (err.response) {
-      return rejectWithValue({ statusCode: err.response.data.statusCode, message: err.response.data.message });
+export const logIn = createAsyncThunk(
+  'users/login',
+  async ({ email, password, done }, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await request.post('/auth/login', {
+        email,
+        password,
+      });
+      if (done) done();
+      dispatch(saveUser({ token: response.data.access_token }));
+      return response.data;
+    } catch (err) {
+      if (err.response) {
+        return rejectWithValue({
+          statusCode: err.response.data.statusCode,
+          message: err.response.data.message,
+        });
+      }
+      if (!err.response) {
+        return rejectWithValue({ statusCode: 500, message: err.message });
+      }
+      return rejectWithValue({
+        statusCode: 500,
+        message: 'Something went wrong',
+      });
     }
-    if (!err.response) {
-      return rejectWithValue({ statusCode: 500, message: err.message });
-    }
-    return rejectWithValue({ statusCode: 500, message: 'Something went wrong' });
   }
-});
+);
 
-export const authMe = createAsyncThunk('users/authMe', async (_, { rejectWithValue }) => {
-  try {
-    const response = await request.get('/auth/me');
-    return response.data;
-  } catch (err) {
-    if (!err.response) {
-      return rejectWithValue({ statusCode: 500, message: err.message });
+export const authMe = createAsyncThunk(
+  'users/authMe',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await request.get('/auth/me');
+      return response.data;
+    } catch (err) {
+      if (!err.response) {
+        return rejectWithValue({ statusCode: 500, message: err.message });
+      }
+      return rejectWithValue({
+        statusCode: err.response.data.statusCode,
+        message: err.response.data.message,
+      });
     }
-    return rejectWithValue({ statusCode: err.response.data.statusCode, message: err.response.data.message });
   }
-});
+);
 
 // --------------------------- SLICE ---------------------------
 export const userSlice = createSlice({
@@ -107,8 +140,12 @@ export const userSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(register.rejected, (state, action) => {
-      if (action.payload.statusCode === 400) state.error = 'Email hoặc số điện thoại đã tồn tại.';
-      else state.error = Array.isArray(action.payload.message) ? action.payload.message[0] : action.payload.message;
+      if (action.payload.statusCode === 400)
+        state.error = 'Email hoặc số điện thoại đã tồn tại.';
+      else
+        state.error = Array.isArray(action.payload.message)
+          ? action.payload.message[0]
+          : action.payload.message;
       state.loading = false;
     });
     // --------------------------- LOGIN ---------------------------
@@ -121,8 +158,12 @@ export const userSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(logIn.rejected, (state, action) => {
-      if (action.payload.statusCode === 401) state.error = 'Email hoặc mật khẩu không đúng.';
-      else state.error = Array.isArray(action.payload.message) ? action.payload.message[0] : action.payload.message;
+      if (action.payload.statusCode === 401)
+        state.error = 'Email hoặc mật khẩu không đúng.';
+      else
+        state.error = Array.isArray(action.payload.message)
+          ? action.payload.message[0]
+          : action.payload.message;
       state.loading = false;
     });
     // --------------------------- SAVE USER ---------------------------
@@ -154,7 +195,10 @@ export const userSlice = createSlice({
   },
 });
 // --------------------------- SELECTORS ---------------------------
-export const selectUserState = createSelector([(state) => state.user], (userState) => userState);
+export const selectUserState = createSelector(
+  [(state) => state.user],
+  (userState) => userState
+);
 // Action creators are generated for each case reducer function
 const { resetData, setCurrentUser } = userSlice.actions;
 export { resetData, setCurrentUser };

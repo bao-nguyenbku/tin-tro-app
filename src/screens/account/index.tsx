@@ -11,7 +11,7 @@ import {
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { SafeAreaView } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import sendFileRequest from '@/utils/sendFileRequest';
+import { requestFile } from '@/utils/request';
 import CustomToast from '@/components/custom-toast';
 import Loading from '@/components/loading';
 import UserMenu from './UserMenu';
@@ -56,7 +56,7 @@ export default function AccountMenu(props: any) {
         type: `image/${fileExtension}`,
       });
       try {
-        await sendFileRequest.post('/users/upload-avatar', formData);
+        await requestFile.post('/users/upload-avatar', formData);
         toast.show({
           render: () => (
             <CustomToast

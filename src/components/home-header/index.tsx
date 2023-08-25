@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Text } from 'native-base';
 import { getHeaderTitle } from '@react-navigation/elements';
-import BackButton from '@/components/back-button';
+import BackButton from '@/components/common/back-button';
 import SearchIcon from '@/screens/explore/SearchIcon';
 import { COLORS } from '@/constants';
 

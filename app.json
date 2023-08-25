@@ -32,7 +32,8 @@
       "versionCode": 1
     },
     "web": {
-      "favicon": "./public/favicon.png"
+      "favicon": "./public/favicon.png",
+      "bundler": "metro"
     },
     "experiments": {
       "tsconfigPaths": true

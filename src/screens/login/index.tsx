@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { logIn } from '@/store/reducer/user';
 import * as yup from 'yup';
 import { Formik } from 'formik';
-import ErrorMessage from '@/components/ErrorFormMessage';
+import ErrorMessage from '@/components/common/error-message';
 import { useTopHeight } from '@/hooks/useHeaderHeight';
 import { Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { useAppDispatch, useAppSelector } from '@/hooks';

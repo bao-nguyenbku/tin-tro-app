@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import request from '@/utils/axios';
+import { request } from '@/utils/request';
 import { RootState } from '@/store';
 
 const initialState = {

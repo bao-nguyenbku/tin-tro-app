@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { getToken } from './token';
-// import { API_BASE_URL } from '@/constants';
+import { API_BASE_URL } from '@/constants';
 
 
 const request = axios.create({
-  baseURL: 'http://192.168.1.5:5000',
+  baseURL: 'http://192.168.1.5:5000' || API_BASE_URL,
   headers: {
     Accept: '*/*',
     Connection: 'keep-alive',
@@ -19,6 +19,19 @@ const request = axios.create({
   timeout: 20000,
 });
 
+const requestFile = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    'Content-Type': 'multipart/form-data',
+  },
+  timeout: 20000,
+});
+// Set token int header
+requestFile.interceptors.request.use(async (config) => {
+  const token = await getToken();
+  config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
 // Set token int header
 request.interceptors.request.use(async (config) => {
   const token = await getToken();
@@ -26,4 +39,4 @@ request.interceptors.request.use(async (config) => {
   return config;
 });
 
-export default request;
+export { request, requestFile };

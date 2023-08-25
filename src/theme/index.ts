@@ -1,5 +1,5 @@
 import { extendTheme } from 'native-base';
-import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import { DefaultTheme } from '@react-navigation/native';
 import { COLORS } from '@/constants';
 
 // For Stack Navigation

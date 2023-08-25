@@ -26,11 +26,12 @@ import AdminRoomStatistics from '@/screens/account/AdminRoomStatistics';
 import AdminRequestCheckoutRoomScreen from '@/screens/admin-request-checkout-room';
 import CreateCheckoutRequestScreen from '@/screens/admin-request-checkout-room/create-checkout-request';
 import AdminMyAccommodation from '@/screens/admin-my-accommodation';
-import NewRoomForm from '@/screens/admin-my-accommodation/NewRoomForm';
+import CreateNewRoom from '@/screens/admin-my-accommodation/create-new-room';
 import RequestList from '@/screens/admin-rent-request/request-list';
 import MessageList from '@/screens/message/message-list';
 import SendMessage from '@/screens/message/SendMessage';
 import { ADMIN_ROUTES, COMMON_ROUTES } from './navigation/map-screen-name';
+import CustomHeader from './components/common/custom-header';
 
 enableScreens(false);
 
@@ -59,6 +60,7 @@ export default function App() {
             headerStyle: {
               backgroundColor: COLORS.PRIMARY,
             },
+            header: (props) => <CustomHeader {...props} />,
             headerBackTitleVisible: false,
           }}
         >
@@ -169,11 +171,11 @@ export default function App() {
                     {/* ======== ADMIN MANAGE ACCOMMODATION ======== */}
                     <Stack.Group>
                       <Stack.Screen
-                        name='AdminAccommodationList'
+                        name={ADMIN_ROUTES.MY_ACCOMMODATION}
                         component={AdminMyAccommodation}
                       />
                       <Stack.Screen
-                        name='NewRoomForm'
+                        name={ADMIN_ROUTES.CREATE_NEW_ROOM}
                         options={{
                           headerShown: true,
                           // header: (stackProps) => <CustomHeader {...stackProps} />,
@@ -181,7 +183,7 @@ export default function App() {
                           headerTitleAlign: 'center',
                           title: 'Thêm phòng mới',
                         }}
-                        component={NewRoomForm}
+                        component={CreateNewRoom}
                       />
                     </Stack.Group>
                     {/* ======== ADMIN MANAGE REQUEST RENTING ======== */}

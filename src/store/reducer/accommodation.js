@@ -9,7 +9,7 @@ import {
 } from '@/services/accommodation';
 // import store from 'store';
 import { PRICE_ASCENDING, PRICE_DECENDING, REVIEW_ASCENDING, REVIEW_DECENDING } from '@/constants';
-import request from '@/utils/axios';
+import { request } from '@/utils/request';
 
 const initialState = {
   accommodations: [],

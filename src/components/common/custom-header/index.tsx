@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Text } from 'native-base';
 import { getHeaderTitle } from '@react-navigation/elements';
-import BackButton from '@/components/back-button';
+import BackButton from '@/components/common/back-button';
 import { COLORS } from '@/constants';
 
 export default function CustomHeader(props: any) {
