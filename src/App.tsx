@@ -36,6 +36,7 @@ import {
   RENTER_ROUTES,
 } from './navigation/map-screen-name';
 import CustomHeader from './components/common/custom-header';
+import MessageHeader from './components/message-header';
 
 enableScreens(false);
 
@@ -107,8 +108,10 @@ export default function App() {
                 <Stack.Screen
                   name='send-message'
                   component={MessageBox}
-                  options={({ route, navigation }) => ({
-                    // header: () => <TitleHeaderOfMessage navigation={navigation} name={route.params.name} avatar={route.params.avatar} />,
+                  options={(props) => ({
+                    header: () => (
+                      <MessageHeader {...props} />
+                    ),
 
                     headerTitleAlign: 'center',
                   })}
@@ -173,7 +176,7 @@ export default function App() {
                     {/* Renter Account Menu Stack  */}
                     <Stack.Group>
                       <Stack.Screen
-                        name='RentRequestList'
+                        name={RENTER_ROUTES.RENT_REQUEST_LIST}
                         component={RentRequestScreen}
                         options={{
                           title: 'Danh sách yêu cầu thuê phòng',

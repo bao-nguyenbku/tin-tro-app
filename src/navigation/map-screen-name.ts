@@ -14,7 +14,9 @@ export const RENTER_ROUTES = {
   EXPLORE: 'explore',
   MY_ROOM: 'my-room',
   MESSAGE: 'message-list',
-  ACCOUNT: 'account'
+  ACCOUNT: 'account',
+  ACCEPT_CHECKOUT_FROM_ADMIN: 'accept_checkout_from_admin',
+  RENT_REQUEST_LIST: 'rent-request-list'
 }
 
 export const COMMON_ROUTES = {

@@ -23,7 +23,10 @@ const isCurrentRenting = (roomInfo, item) => {
 
 export default function AccommodationDetailsScreen(props: any) {
   const navigation = useNavigation();
-  console.log("🚀 ~ file: index.tsx:26 ~ AccommodationDetailsScreen ~ navigation:", navigation.getState())
+  console.log(
+    '🚀 ~ file: index.tsx:26 ~ AccommodationDetailsScreen ~ navigation:',
+    navigation.getState()
+  );
   const { route } = props;
   const item = route.params ? route.params.item : undefined;
   const { roomInfo } = useAppSelector(selectRentingState);
@@ -33,11 +36,9 @@ export default function AccommodationDetailsScreen(props: any) {
     const owner = item?.owner;
     navigation.navigate('send-message', {
       // screen: 'send-message',
-      params: {
-        fromId: owner?.id,
-        avatar: owner?.avatar,
-        name: owner?.name,
-      },
+      fromId: owner?.id,
+      avatar: owner?.avatar,
+      name: owner?.name,
     });
   };
   return (

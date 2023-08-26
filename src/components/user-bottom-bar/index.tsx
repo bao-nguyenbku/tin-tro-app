@@ -8,6 +8,7 @@ import MessageList from '@/screens/message/message-list';
 import AccountMenu from '@/screens/account';
 import HomeHeader from '@/components/home-header';
 import { COLORS } from '@/constants';
+import CustomHeader from '@/components/common/custom-header';
 
 const Tab = createBottomTabNavigator();
 
@@ -48,9 +49,7 @@ export default function UserBottomBar(props: any) {
         },
         // TODO: Temporarily disable bottom tab nav header
         headerTintColor: COLORS.WHITE,
-        headerStyle: {
-          backgroundColor: COLORS.PRIMARY,
-        },
+        header: (props) => <CustomHeader {...props} />,
         headerShown: true,
       })}
     >
@@ -80,6 +79,7 @@ export default function UserBottomBar(props: any) {
         name={RENTER_ROUTES.ACCOUNT}
         options={{
           title: 'Tài khoản',
+          headerShown: false,
         }}
         children={() => <AccountMenu {...props} />}
       />
